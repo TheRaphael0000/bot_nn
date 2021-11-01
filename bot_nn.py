@@ -52,13 +52,14 @@ class BotNN(discord.Client):
             poss = list(self.members_lookup.keys())
             for pos in poss:
                 d = manhattan_distance(pos, my_pos)
-                if d < N:
+                if d < N and pos != my_pos:
                     valid.append((self.members_lookup[pos], d))
 
             valid.sort(key=lambda x:x[-1])
 
             if len(valid) <= 0:
                 await message.reply("Tu n'as pas de voisins sur ce serveur .-.")
+                return
 
             msg = "```Pseudo,Distance\n"
             for v, d in valid:
@@ -72,7 +73,7 @@ def manhattan_distance(a, b):
     return abs(a[0] - b[0]) + abs(a[1] - b[1])
 
 def parse_name(name):
-    m = re.findall("(\d+)[,:;/- ](\d+)", name)
+    m = re.findall("(\d+)[,:;/-](\d+)", name)
     if len(m) < 1:
         return False
     X, Y = m[0]
