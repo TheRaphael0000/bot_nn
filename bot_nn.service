@@ -1,0 +1,14 @@
+[Unit]
+Description=BotNN
+After=network.target
+
+[Service]
+Environment=PYTHONUNBUFFERED=1
+Type=notify
+User=bot_nn
+WorkingDirectory=/opt/bot_nn
+ExecStart=/usr/bin/python /opt/bot_nn/bot_nn.py
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
