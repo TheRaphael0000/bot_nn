@@ -4,9 +4,12 @@ import os
 import re
 
 import time
-import threading
-import systemd.daemon
 
+from threading import Thread, Lock
+try:
+    import systemd.daemon
+except ModuleNotFoundError:
+    print("Can't find systemd")
 
 import discord
 from dotenv import load_dotenv
@@ -25,10 +28,14 @@ class BotNN(discord.Client):
         intents.members = True
         super().__init__(intents=intents)
         self.members_lookup = {}
-        systemd.daemon.notify('READY=1')
+        self.mutex = Lock()
+        try:
+            systemd.daemon.notify('READY=1')
+        except NameError:
+            pass
 
     async def on_ready(self):
-        x = threading.Thread(target=self.threading_loop, daemon=True)
+        x = Thread(target=self.threading_loop, daemon=True)
         x.start()
 
     def threading_loop(self):
@@ -37,6 +44,7 @@ class BotNN(discord.Client):
             time.sleep(UPDATE_LOOKUP_DELTA)
 
     def update_lookup(self):
+        self.mutex.acquire()
         members = self.guilds[0].members
         self.members_lookup = {}
         for m in members:
@@ -49,6 +57,7 @@ class BotNN(discord.Client):
             self.members_lookup[pos] = m
 
         print(len(self.members_lookup))
+        self.mutex.release()
 
     async def on_message(self, message):
         if message.author == self.user:
@@ -64,16 +73,18 @@ class BotNN(discord.Client):
 
             valid = []
 
+            self.mutex.acquire()
             poss = list(self.members_lookup.keys())
             for pos in poss:
                 d = manhattan_distance(pos, my_pos)
                 if d < N and pos != my_pos:
                     valid.append((self.members_lookup[pos], d))
+            self.mutex.release()
 
             valid.sort(key=lambda x: x[-1])
 
             if len(valid) <= 0:
-                await message.reply("Tu n'as pas de voisins sur ce serveur .-.")
+                await message.reply("Tu n'as pas enocre de voisins sur ce serveur .-.")
                 return
 
             msg = "```Pseudo,Distance\n"
