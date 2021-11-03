@@ -5,6 +5,8 @@ import re
 
 import time
 import threading
+import systemd.daemon
+
 
 import discord
 from dotenv import load_dotenv
@@ -23,6 +25,7 @@ class BotNN(discord.Client):
         intents.members = True
         super().__init__(intents=intents)
         self.members_lookup = {}
+        systemd.daemon.notify('READY=1')
 
     async def on_ready(self):
         x = threading.Thread(target=self.threading_loop, daemon=True)
