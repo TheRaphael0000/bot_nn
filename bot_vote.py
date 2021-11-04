@@ -191,7 +191,7 @@ class DTBPSBot(discord.Client):
 
         await message.author.send(
 f"""Pour me prouver ton individualité dirty-biologique en tant que "{author_name}", change la couleur de ton pixel avec ce code:
-```{auth_color}```Je reviens dès j'aurais jeté un oeil au drapeau (toutes les {UPDATE_FLAG_MIN_DELTA}s) et que ton pixel aura changé !
+```{auth_color}```Je reviens dès j'aurai jeté un oeil au drapeau (toutes les {UPDATE_FLAG_MIN_DELTA}s) et que ton pixel aura changé !
 """)
 
         start = datetime.now()
@@ -213,8 +213,8 @@ f"""Pour me prouver ton individualité dirty-biologique en tant que "{author_nam
         assert new_hex_col == auth_color
 
         await message.author.send(
-f"""Apparemment c'est bien toi. Voici ton token, ne le partages pas:
-```prototype, la génération de token est à implementer```Si tu le perds, reinscrit-toi et l'ancien deviendra invalide.
+f"""Apparemment c'est bien toi. Voici ton token, ne le partage pas:
+```prototype, la génération de token est à implementer```Si tu le perds, reinscris-toi et l'ancien deviendra invalide.
 Pour l'utiliser il suffira de me le donner (ou à un autre système peut-être..) en privé lors des sessions de vote.
 Tu peux maintenant recoloriser ton pixel comme bon te semble.""")
 
@@ -224,7 +224,7 @@ Tu peux maintenant recoloriser ton pixel comme bon te semble.""")
         name = str(message.author.display_name)
         my_pos = parse_name(name)
         if not my_pos:
-            await message.reply("Affiche ta coordonnée dans ton pseudo. Example : _[018:006] TheRaphael0000_")
+            await message.reply("Affiche tes coordonnées dans ton pseudo. Example : _[018:006] TheRaphael0000_")
             return
 
         valid = []
@@ -240,7 +240,7 @@ Tu peux maintenant recoloriser ton pixel comme bon te semble.""")
         valid.sort(key=lambda x: x[-1])
 
         if len(valid) <= 0:
-            await message.reply("Tu n'as pas enocre de voisins sur ce serveur .-.")
+            await message.reply("Tu n'as pas encore de voisins sur ce serveur .-.")
             return
 
         msg = "```Pseudo,Distance\n"
@@ -339,7 +339,7 @@ def main():
     config.read('settings.ini')
     token = config.get('discord', 'TOKEN', fallback=None)
     if not token:
-        print('please configure your discord token in settings.ini')
+        print('il faut configurer le token discord dans le fichier settings.ini')
 
     bot = DTBPSBot()
     try:
