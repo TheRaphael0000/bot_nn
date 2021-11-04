@@ -53,8 +53,8 @@ def execute_fn(mutex, all_regions, display_name, args):
                 coords = region.get_coords_str()
                 name = region.get_name()
                 rows.append([coords, distance, name])
-        answer = tabulate(rows, MSG_HEADER, colalign=(
-            "center", "center", "left"))
+            answer = tabulate(rows, MSG_HEADER, colalign=(
+                "center", "center", "left"))
 
     return answer
 
