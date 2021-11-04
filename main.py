@@ -19,12 +19,8 @@ import neighbours
 
 LOOP_FREQUENCY = 120
 
-DEFAULT_DISTANCE = 10
 MSG_HELP = f"""
 Ce bot permet d'en savoir plus sur votre région et vos voisins.
-
-* /voisins     : obtenir la liste de vos voisins à moins de {DEFAULT_DISTANCE} cases
-* /voisins [X] : obtenir la liste de vos voisins à moins de X case (X <= 100)
 
 GitHub  : http://github.com/TheRaphael0000/bot_nn
 """

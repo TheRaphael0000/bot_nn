@@ -26,7 +26,7 @@ class Region:
         ox, oy = other.get_coords()
         dx = abs(sx - ox)
         dy = abs(sy - oy)
-        return float(dx + dy)
+        return int(dx + dy)
 
 
 def name_to_region(display_name):
