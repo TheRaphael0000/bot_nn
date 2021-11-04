@@ -1,4 +1,4 @@
-Bot pour https://discord.gg/vPtfGTTY de https://www.youtube.com/watch?v=ehmyaX0lJew
+Bot pour https://www.youtube.com/watch?v=ehmyaX0lJew
 
 
 Faites vous plaiz avec les pulls requests
