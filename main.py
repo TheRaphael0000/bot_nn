@@ -74,7 +74,7 @@ class BotRegion(discord.Client):
         command, *args = content
         answer = []
 
-        if command == "/voisins":
+        if command == "/voisins" or command == "/nn" or command == "/voisin":
             answer = neighbours.execute(self.mutex, self.all_regions, display_name, args)
             await message.reply("\n".join(answer))
 
