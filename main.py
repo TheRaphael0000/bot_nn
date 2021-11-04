@@ -59,12 +59,9 @@ class BotRegion(discord.Client):
         self.mutex.acquire()
         members = self.guilds[0].members
         for member in members:
-            if member.bot:
-                continue
-
             display_name = member.display_name
             region = name_to_region(display_name)
-            if region.is_empty():
+            if not region:
                 continue
 
             self.all_regions.append(region)
@@ -82,11 +79,8 @@ class BotRegion(discord.Client):
         answer = []
 
         if command == "/voisins":
-            answer = neighbours.execute(self.mutex, self.all_regions,
-                                        display_name, args)
-
-        await message.reply("```" + "\n".join(answer) + "```")
-        return
+            answer = neighbours.execute(self.mutex, self.all_regions, display_name, args)
+            await message.reply("\n".join(answer))
 
 
 def main():

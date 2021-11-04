@@ -30,14 +30,9 @@ class Region:
 
 
 def name_to_region(display_name):
-    coords = re.findall(r"(\d+)[^\d](\d+)(.*)", display_name)
-    x, y, name = None, None, None
-    if len(coords) > 0:
-        _x, _y, _name = coords[0]
-        _x, _y = int(x), int(y)
-        if _x > -1 and _y > -1:
-            _x, _y = "00" + str(_x), "00" + str(_y)
-            _x, _y = _x[-3:], _y[-3:]
-            _name = _name.strip()
-            x, y, name = _x, _y, _name
-    return Region(x, y, name)
+    m = re.findall("(\d+)[^\d](\d+)", display_name)
+    if len(m) < 1:
+        return False
+    x, y = m[0]
+    x, y = max(0, int(x)), max(0, int(y))
+    return Region(x, y, display_name)
