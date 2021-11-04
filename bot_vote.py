@@ -226,36 +226,6 @@ Tu peux maintenant recoloriser ton pixel comme bon te semble.""")
 
         # TODO: gen token + maintain json database
 
-    async def on_cmd_nn(self, message, args):
-        name = str(message.author.display_name)
-        my_pos = parse_name(name)
-        if not my_pos:
-            await message.reply("Affiche tes coordonnées dans ton pseudo. Example : _[018:006] TheRaphael0000_")
-            return
-
-        valid = []
-
-        self.mutex.acquire()
-        poss = list(self.members_lookup.keys())
-        for pos in poss:
-            d = manhattan_distance(pos, my_pos)
-            if d < N and pos != my_pos:
-                valid.append((self.members_lookup[pos], d))
-        self.mutex.release()
-
-        valid.sort(key=lambda x: x[-1])
-
-        if len(valid) <= 0:
-            await message.reply("Tu n'as pas encore de voisins sur ce serveur .-.")
-            return
-
-        msg = "```Pseudo,Distance\n"
-        for v, d in valid:
-            msg += f"{str(v.display_name)},{d}\n"
-        msg += "```"
-
-        await message.reply(msg)
-
     # override
     async def on_message(self, message):
         if message.author == self.user:
@@ -263,9 +233,7 @@ Tu peux maintenant recoloriser ton pixel comme bon te semble.""")
 
         words = re.split(r"\s+", message.content)
         #TODO: use a dict
-        if words[0] == "/nn":
-            pass #await self.on_cmd_nn(message, words[1:])
-        elif words[0] == "/inscription":
+        if words[0] == "/inscription":
             await self.on_cmd_inscription(message, words[1:])
         elif words[0] == "/echo":
             await message.reply(" ".join(words[1:]))
@@ -273,10 +241,6 @@ Tu peux maintenant recoloriser ton pixel comme bon te semble.""")
         # pour les commandes par défaut de discord.py:
         if USE_DEFAULT_BOT_COMMANDS:
             self.process_commands(message)
-
-
-def manhattan_distance(a, b):
-    return abs(a[0] - b[0]) + abs(a[1] - b[1])
 
 
 def parse_name(name):
