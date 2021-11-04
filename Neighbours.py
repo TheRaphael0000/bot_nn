@@ -1,15 +1,26 @@
 #!/usr/bin/env python
 
-from region import name_to_region
+from tabulate import tabulate
+
+from Command import Command
+from Region import Region
 
 DEFAULT_DISTANCE = 10
 
-MSG_NO_COORDS = "Écris ta région dans ton pseudo. Exemple : _[018:006] TheRaphael0000_"
+DESCRIPTION = f"""
+* /voisins     : obtenir la liste de vos voisins à moins de {DEFAULT_DISTANCE} cases
+* /voisins [X] : obtenir la liste de vos voisins à moins de X case (X <= 100)
+"""
+
+MSG_NO_COORDS = [
+    "Écris ta région dans ton pseudo.",
+    "Convention : [XXX:YYY] Pseudo"
+]
 MSG_NO_NEIGHBOUR = "Tu n'as pas encore de voisins sur ce serveur .-."
-MSG_SUCCESS = "Position\tDistance\tPseudo"
+MSG_HEADER = ["Position", "Distance", "Pseudo"]
 
 
-def execute(mutex, all_regions, display_name, args):
+def execute_fn(mutex, all_regions, display_name, args):
     answer = []
 
     max_distance = DEFAULT_DISTANCE
@@ -21,9 +32,9 @@ def execute(mutex, all_regions, display_name, args):
         except ValueError:
             pass
 
-    my_region = name_to_region(display_name)
+    my_region = Region(display_name)
     if my_region.is_empty():
-        answer = [MSG_NO_COORDS]
+        answer = MSG_NO_COORDS
     else:
         neighbours = []
         mutex.acquire()
@@ -34,13 +45,18 @@ def execute(mutex, all_regions, display_name, args):
         mutex.release()
 
         neighbours = sorted(neighbours, key=lambda n: n[-1])
-        answer = [MSG_NO_NEIGHBOUR]
+        answer = MSG_NO_NEIGHBOUR
 
         if len(neighbours) > 0:
-            answer = [MSG_SUCCESS]
+            rows = []
             for (region, distance) in neighbours:
-                x, y = region.get_coords()
+                coords = region.get_coords_str()
                 name = region.get_name()
-                answer.append(f"[{x}:{y}]\t{distance}\t{name}")
+                rows.append([coords, distance, name])
+        answer = tabulate(rows, MSG_HEADER, colalign=(
+            "center", "center", "left"))
 
     return answer
+
+
+Neighbours = Command(DESCRIPTION, execute_fn)
