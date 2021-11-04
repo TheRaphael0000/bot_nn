@@ -19,8 +19,8 @@ import discord
 
 help_msg = """Discord:..."""
 N = 10
-AUTH_TIMEOUT = 180
-UPDATE_FLAG_MIN_DELTA = 120
+AUTH_TIMEOUT = 190
+UPDATE_FLAG_MIN_DELTA = 60
 USE_DEFAULT_BOT_COMMANDS = False
 DEBUGGING = True
 
@@ -190,7 +190,7 @@ class DTBPSBot(discord.Client):
             author_name = "(invalid)"
 
         await message.author.send(
-f"""Pour me prouvez ton individualité dirty-biologique en tant que "{author_name}", change la couleur de ton pixel avec ce code:
+f"""Pour me prouver ton individualité dirty-biologique en tant que "{author_name}", change la couleur de ton pixel avec ce code:
 ```{auth_color}```Je reviens dès j'aurais jeté un oeil au drapeau (toutes les {UPDATE_FLAG_MIN_DELTA}s) et que ton pixel aura changé !
 """)
 
@@ -213,8 +213,8 @@ f"""Pour me prouvez ton individualité dirty-biologique en tant que "{author_nam
         assert new_hex_col == auth_color
 
         await message.author.send(
-f"""Apparemment c'est bien toi. Voici ton token, ne le partages pas.
-Si tu le perds, reinscrit-toi et l'ancien deviendra invalide.
+f"""Apparemment c'est bien toi. Voici ton token, ne le partages pas:
+```prototype, la génération de token est à implementer```Si tu le perds, reinscrit-toi et l'ancien deviendra invalide.
 Pour l'utiliser il suffira de me le donner (ou à un autre système peut-être..) en privé lors des sessions de vote.
 Tu peux maintenant recoloriser ton pixel comme bon te semble.""")
 
