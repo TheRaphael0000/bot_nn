@@ -54,6 +54,7 @@ class DTBPSBot(discord.Client):
         self._flag_timestamp = datetime.fromtimestamp(0)
         self._flag_update_errored = False
         self._flag_update_task = None
+        self.seen_ppl = set()
 
     # override (not guaranteed to be called first, nor once)
     async def on_ready(self):
@@ -143,7 +144,9 @@ class DTBPSBot(discord.Client):
 
     async def on_cmd_inscription(self, message, args):
         # it's a coroutine, the whole thing is here :)
-        await message.author.send("Salutations!")
+        if message.author.id not in self.seen_ppl:
+            await message.author.send("Salutations!")
+            self.seen_ppl.add(message.author.id)
 
         #TODO: prevent concurrent requests...
 
@@ -190,8 +193,9 @@ class DTBPSBot(discord.Client):
             author_name = "(invalid)"
 
         await message.author.send(
-f"""Pour me prouver ton individualité dirty-biologique en tant que "{author_name}", change la couleur de ton pixel avec ce code:
-```{auth_color}```Je reviens dès j'aurai jeté un oeil au drapeau (toutes les {UPDATE_FLAG_MIN_DELTA}s) et que ton pixel aura changé !
+f"""Pour me prouver ton unicité dirty-biologico-pixelique en tant que "{author_name}", change la couleur de ton pixel avec ce code:
+```{auth_color}```Au cas où voilà le lien du drapeau: <https://fouloscopie.com/experiment/7>.
+Je reviens dès j'aurai jeté un oeil au drapeau (toutes les {UPDATE_FLAG_MIN_DELTA}s) et que ton pixel aura changé !
 """)
 
         start = datetime.now()
@@ -212,9 +216,11 @@ f"""Pour me prouver ton individualité dirty-biologique en tant que "{author_nam
         # better be sure, in case above logic changes
         assert new_hex_col == auth_color
 
+        token = secrets.token_hex(16)
+
         await message.author.send(
 f"""Apparemment c'est bien toi. Voici ton token, ne le partage pas:
-```prototype, la génération de token est à implementer```Si tu le perds, reinscris-toi et l'ancien deviendra invalide.
+```{token} // prototype, ce token ne sera pas utilisable```Si tu le perds, refais la procédure et l'ancien deviendra invalide.
 Pour l'utiliser il suffira de me le donner (ou à un autre système peut-être..) en privé lors des sessions de vote.
 Tu peux maintenant recoloriser ton pixel comme bon te semble.""")
 
