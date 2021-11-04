@@ -2,7 +2,7 @@
 
 from region import name_to_region
 
-MAX_CHARS = 2000
+MAX_CHARS = 1300
 
 MSG_NO_COORDS = "Écris ta région dans ton pseudo. Exemple : _[018:006] TheRaphael0000_"
 MSG_NO_NEIGHBOUR = "Tu n'as pas encore de voisins sur ce serveur .-."
