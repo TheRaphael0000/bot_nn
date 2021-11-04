@@ -60,9 +60,6 @@ class BotRegion(discord.Client):
         self.mutex.acquire()
         members = self.guilds[0].members
         for member in members:
-            if member.bot:
-                continue
-
             display_name = member.display_name
             region = Region(display_name)
             if region.is_empty():

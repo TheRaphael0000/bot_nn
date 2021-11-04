@@ -5,6 +5,8 @@ from tabulate import tabulate
 from Command import Command
 from Region import Region
 
+MAX_CHARS = 1300
+
 DEFAULT_DISTANCE = 10
 
 DESCRIPTION = f"""

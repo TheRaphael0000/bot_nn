@@ -6,8 +6,8 @@ After=network.target
 Environment=PYTHONUNBUFFERED=1
 Type=notify
 User=bot_region
-WorkingDirectory=/opt/bot_region
-ExecStart=/usr/bin/python /opt/bot_region/main.py
+WorkingDirectory=/opt/bot_nn
+ExecStart=/usr/bin/python /opt/bot_nn/main.py
 Restart=on-failure
 
 [Install]
