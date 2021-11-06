@@ -7,6 +7,7 @@ Faites vous plair avec les pulls requests !
 todo:
 - [ ] d'autre commande
 - [x] structure du code, merci @Ynue
-- [x] custom distance @Ynue
+- [x] custom distance, merci @Ynue
+- [x] amélioration du README, merci @KyleMusk
 - [ ] autre
 - [ ] 
